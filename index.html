@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vida em Movimento | Academia e Treinamento</title>
+<style>
+:root{--bg:#08111d;--panel:#101d2c;--panel2:#142438;--text:#f2f6fb;--muted:#b8c5d5;--accent:#ffc928;--line:#293b50;--good:#57d69a;--focus:#6bdcff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+body.large-text{font-size:1.15rem}
+body.high-contrast{--bg:#000;--panel:#000;--panel2:#111;--text:#fff;--muted:#fff;--accent:#ff0;--line:#fff;--focus:#0ff}
+body.colorblind{--accent:#56d8ff;--good:#f5c451;--focus:#ff8c42}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;background:#07101bea;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{max-width:1200px;margin:auto;padding:14px 20px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-size:1.12rem;font-weight:900;letter-spacing:.5px}.brand span{color:var(--accent)}.tagline{font-size:.78rem;color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+.tab-btn{padding:8px 11px;text-decoration:none;border-radius:8px;color:var(--muted);font-size:.92rem;background:transparent;border:1px solid transparent}
+.tab-btn:hover,.tab-btn.active{background:var(--panel2);color:var(--accent);border-color:var(--line)}
+.tab-panel[hidden]{display:none!important}
+main{max-width:1200px;margin:auto;padding:22px 20px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(115deg,#101d2c 0%,#101d2c 54%,#1c2a3a 100%);position:relative;overflow:hidden}
+.hero:after{content:"🏋️";position:absolute;right:5%;bottom:-25px;font-size:clamp(6rem,17vw,12rem);opacity:.14}
+.hero h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;margin:0 0 12px;max-width:650px}
+.hero h1 span{color:var(--accent)}.hero p{max-width:610px;color:var(--muted)}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#161616;font-weight:800;border-radius:9px;padding:10px 15px;display:inline-block;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--accent)}
+.btn:hover{filter:brightness(1.08)}
+section{margin-top:28px;scroll-margin-top:100px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h2{font-size:1.45rem;margin:0}h3{margin:0 0 8px;font-size:1.08rem}
+.sub{color:var(--muted);margin:4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.workout-card{display:flex;flex-direction:column;gap:8px}
+.workout-card .emoji{font-size:1.7rem}.workout-card p{color:var(--muted);margin:0;flex:1}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 9px;font-size:.78rem;color:var(--muted);width:max-content}
+.two-col{display:grid;grid-template-columns:1fr;gap:16px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--accent);background:var(--panel2)}
+td{color:var(--text)}
+label{display:block;font-weight:700;margin:10px 0 5px}
+input,select,textarea{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+textarea{min-height:110px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rating{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.rating button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.rating button[aria-pressed="true"]{border:2px solid var(--accent);background:#263449}
+.status{color:var(--good);font-weight:700;min-height:1.4em}
+.history-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.history-item:last-child{border:0}
+.small{font-size:.88rem;color:var(--muted)}
+.access-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.access-grid button{padding:12px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--text);text-align:left}
+footer{border-top:1px solid var(--line);margin-top:36px;padding:24px 20px;color:var(--muted);text-align:center}
+#toast{position:fixed;bottom:18px;right:18px;background:var(--panel2);border:1px solid var(--accent);padding:12px 16px;border-radius:10px;display:none;z-index:10;max-width:90vw}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}.nav{align-items:flex-start}nav{width:100%}}
+@media(max-width:560px){main{padding:15px 12px}.hero{padding:28px 18px}.grid,.form-row,.access-grid{grid-template-columns:1fr}.nav{padding:12px}.brand{font-size:1rem}nav a{padding:7px;font-size:.84rem}th,td{padding:8px 6px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div><div class="brand">VIDA EM <span>MOVIMENTO</span></div><div class="tagline">Mais saúde. Mais força. Mais você.</div></div>
+    <nav aria-label="Abas principais" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="inicio">Início</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="treinos">Treinos</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="cardio">Cardio</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="descanso">Descanso muscular</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="registro">Registrar treino</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="progresso">Meu progresso</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="acessibilidade">Acessibilidade</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tab-panel" id="panel-inicio" role="tabpanel">
+  <section class="hero" id="inicio">
+    <h1>Sua jornada começa <span>em movimento.</span></h1>
+    <p>Planos de treinamento organizados, acompanhamento de progresso e recursos inclusivos para que cada pessoa encontre uma forma de se movimentar.</p>
+    <a class="btn" href="#treinos">Explorar treinos ↓</a>
+    <p class="small">Importante: ajuste cargas e exercícios ao seu nível. Se tiver dor, limitações ou dúvidas, procure orientação de um profissional de Educação Física ou de saúde.</p>
+  </section>
+
+  </div>
+  <div class="tab-panel" id="panel-treinos" role="tabpanel" hidden>
+  <section id="treinos">
+    <div class="section-head"><div><h2>Planos de treinamento</h2><p class="sub">Selecione um grupo muscular para ver os exercícios sugeridos.</p></div></div>
+    <div class="grid" id="workoutCards"></div>
+  </section>
+
+  <section class="two-col" id="detalhes">
+    <div class="card">
+      <div class="section-head"><div><h2 id="planTitle">Treino de Peito e Tríceps</h2><p class="sub" id="planDescription">Exemplo de treino para nível iniciante a intermediário.</p></div><span class="pill" id="planTag">6 exercícios</span></div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th><th>Descanso</th></tr></thead><tbody id="exerciseRows"></tbody></table>
+      </div>
+      <p class="small">As séries e repetições são referências gerais, não uma prescrição individual. Comece com carga controlável, priorize a técnica e descanse mais se precisar.</p>
+      <button class="btn" id="completeBtn">Registrar treino concluído</button>
+      <p id="completeStatus" class="status" role="status" aria-live="polite"></p>
+    </div>
+
+  </section>
+  </div>
+  <div class="tab-panel" id="panel-cardio" role="tabpanel" hidden>
+    <section id="cardio">
+      <div class="card">
+
+      <h2>Cardio — 60 minutos</h2>
+      <p class="sub">Escolha esteira, bicicleta ou elíptico. Mantenha um ritmo adequado à sua condição física.</p>
+      <label for="cardioMachine">Equipamento</label>
+      <select id="cardioMachine"><option>Esteira</option><option>Bicicleta ergométrica</option><option>Elíptico</option><option>Caminhada ao ar livre</option></select>
+      <div class="table-wrap"><table><tbody>
+        <tr><td><strong>0–10 min</strong></td><td>Aquecimento leve e gradual.</td></tr>
+        <tr><td><strong>10–25 min</strong></td><td>Ritmo confortável, respiração controlada.</td></tr>
+        <tr><td><strong>25–45 min</strong></td><td>Ritmo moderado; reduza se ficar desconfortável.</td></tr>
+        <tr><td><strong>45–55 min</strong></td><td>Continue em ritmo sustentável, sem forçar.</td></tr>
+        <tr><td><strong>55–60 min</strong></td><td>Desacelere gradualmente para finalizar.</td></tr>
+      </tbody></table></div>
+      <p class="small">Uma hora de cardio não é obrigatória para todos. Adapte a duração à sua saúde, experiência e recuperação; interrompa se sentir mal-estar.</p>
+      <button class="btn secondary" id="cardioBtn">Registrar cardio de 60 min</button>
+
+      </div>
+    </section>
+  </div>
+
+
+  <div class="tab-panel" id="panel-descanso" role="tabpanel" hidden>
+    <section id="descanso">
+      <div class="section-head">
+        <div>
+          <h2>Descanso e recuperação muscular</h2>
+          <p class="sub">O progresso também acontece quando o corpo descansa.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="emoji" aria-hidden="true">🧬</div>
+          <h3>Por que descansar?</h3>
+          <p>Após o treino, o organismo repara e adapta os músculos ao esforço realizado. A recuperação ajuda a manter o desempenho e a reduzir o risco de excesso de treino.</p>
+        </article>
+        <article class="card">
+          <div class="emoji" aria-hidden="true">⏱️</div>
+          <h3>Intervalo entre treinos</h3>
+          <p>Como orientação geral, dê cerca de 48 horas antes de treinar intensamente o mesmo grupo muscular. O tempo ideal varia conforme a intensidade, a experiência e a recuperação individual.</p>
+        </article>
+        <article class="card">
+          <div class="emoji" aria-hidden="true">😴</div>
+          <h3>Durma bem</h3>
+          <p>O sono contribui para a recuperação física, a atenção e a disposição. Tente manter horários regulares e uma rotina tranquila antes de dormir.</p>
+        </article>
+        <article class="card">
+          <div class="emoji" aria-hidden="true">🥗</div>
+          <h3>Alimentação e hidratação</h3>
+          <p>Comer de forma variada, incluir fontes de proteína e beber água ao longo do dia ajudam o corpo a se recuperar. Não é necessário recorrer a suplementos sem orientação profissional.</p>
+        </article>
+        <article class="card">
+          <div class="emoji" aria-hidden="true">🚶</div>
+          <h3>Recuperação ativa</h3>
+          <p>Caminhadas leves, mobilidade suave ou descanso completo podem ser opções em dias sem treino intenso. Escolha atividades confortáveis para você.</p>
+        </article>
+        <article class="card">
+          <div class="emoji" aria-hidden="true">⚠️</div>
+          <h3>Respeite os sinais do corpo</h3>
+          <p>Cansaço persistente, queda de desempenho ou dor que piora são sinais para reduzir o esforço e buscar orientação. Não treine por cima de uma dor importante.</p>
+        </article>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Exemplo simples de organização semanal</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Dia</th><th>Exemplo de atividade</th></tr></thead>
+            <tbody>
+              <tr><td>Segunda</td><td>Peito e tríceps</td></tr>
+              <tr><td>Terça</td><td>Costas e bíceps</td></tr>
+              <tr><td>Quarta</td><td>Descanso ou atividade leve</td></tr>
+              <tr><td>Quinta</td><td>Pernas e glúteos</td></tr>
+              <tr><td>Sexta</td><td>Ombros e abdômen</td></tr>
+              <tr><td>Sábado</td><td>Atividade leve ou descanso</td></tr>
+              <tr><td>Domingo</td><td>Descanso</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">Este é apenas um exemplo. A divisão deve ser adaptada à rotina, ao nível de experiência e às orientações de um profissional de Educação Física.</p>
+      </div>
+    </section>
+  </div>
+  <div class="tab-panel" id="panel-registro" role="tabpanel" hidden>
+  <section class="two-col" id="registro">
+    <div class="card">
+      <h2>Como foi seu treino?</h2><p class="sub">Sua opinião ajuda a acompanhar a experiência e ajustar os próximos treinos.</p>
+      <form id="feedbackForm">
+        <label for="feedbackWorkout">Treino realizado</label>
+        <select id="feedbackWorkout"></select>
+        <label>Como você avalia a sessão?</label>
+        <div class="rating" role="group" aria-label="Avaliação do treino">
+          <button type="button" data-rating="1" aria-pressed="false">😞 Difícil</button>
+          <button type="button" data-rating="2" aria-pressed="false">😐 Regular</button>
+          <button type="button" data-rating="3" aria-pressed="false">🙂 Bom</button>
+          <button type="button" data-rating="4" aria-pressed="false">😁 Ótimo</button>
+        </div>
+        <label for="feedbackText">Comentário (opcional)</label>
+        <textarea id="feedbackText" placeholder="Conte como se sentiu, o que gostou ou o que gostaria de adaptar."></textarea>
+        <button class="btn" type="submit">Salvar feedback</button>
+        <p class="status" id="feedbackStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+  </section>
+  </div>
+  <div class="tab-panel" id="panel-progresso" role="tabpanel" hidden>
+    <section id="progresso">
+    <div class="card" id="progresso">
+      <div class="section-head"><div><h2>Meu histórico</h2><p class="sub">Registros guardados neste navegador.</p></div><button class="btn secondary" id="exportBtn" type="button">Exportar</button></div>
+      <div id="historyList" aria-live="polite"></div>
+      <button class="btn secondary" id="clearBtn" type="button">Apagar histórico</button>
+      <p class="small">Os dados ficam neste dispositivo. Limpar os dados do navegador pode removê-los.</p>
+    </div>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="panel-acessibilidade" role="tabpanel" hidden>
+  <section id="acessibilidade">
+    <div class="section-head"><div><h2>Acessibilidade e inclusão</h2><p class="sub">Personalize a leitura e a navegação conforme sua preferência.</p></div></div>
+    <div class="card">
+      <div class="access-grid">
+        <button id="contrastBtn" type="button" aria-pressed="false">◐ <strong>Alto contraste</strong><br><span class="small">Aumenta a diferença entre fundo e texto.</span></button>
+        <button id="colorBtn" type="button" aria-pressed="false">◉ <strong>Modo para daltonismo</strong><br><span class="small">Muda cores de destaque; informações também usam texto e ícones.</span></button>
+        <button id="textBtn" type="button" aria-pressed="false">A+ <strong>Texto ampliado</strong><br><span class="small">Aumenta o tamanho geral da fonte.</span></button>
+        <button id="readBtn" type="button">🔊 <strong>Ler instruções</strong><br><span class="small">Usa a leitura de voz disponível no navegador.</span></button>
+      </div>
+      <p class="small">Para pessoas surdas ou com deficiência auditiva: as instruções principais estão escritas e não dependem de áudio. Para vídeos futuros, inclua legendas e, quando possível, interpretação em Libras. O site também oferece navegação por teclado e rótulos para leitores de tela.</p>
+    </div>
+  </section>
+  </div>
+</main>
+<footer><strong>VIDA EM MOVIMENTO</strong><br>Treinamento, bem-estar e inclusão para todos.<br><span class="small">Este site é um modelo educativo e não substitui avaliação profissional individual.</span></footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const plans = {
+  "Peito e tríceps":{emoji:"🏋️",desc:"Empurrar e extensão dos braços",tag:"Peito + tríceps",ex:[
+    ["Supino reto (barra ou máquina)","3","8–12","60–90 s"],
+    ["Supino inclinado com halteres","3","8–12","60–90 s"],
+    ["Crucifixo na máquina ou cabos","2–3","10–15","45–60 s"],
+    ["Flexão de braços (adaptada se preciso)","2–3","6–12","60 s"],
+    ["Tríceps na polia","3","10–15","45–60 s"],
+    ["Tríceps francês com halter","2","10–12","45–60 s"]]},
+  "Costas e bíceps":{emoji:"💪",desc:"Puxadas e movimentos de remada",tag:"Costas + bíceps",ex:[
+    ["Puxada frontal na polia","3","8–12","60–90 s"],
+    ["Remada baixa sentada","3","8–12","60–90 s"],
+    ["Remada unilateral com halter","3","10 por lado","60 s"],
+    ["Pulldown com braços estendidos","2","12–15","45–60 s"],
+    ["Rosca direta com barra ou halteres","3","8–12","45–60 s"],
+    ["Rosca martelo","2","10–12","45–60 s"]]},
+  "Pernas e glúteos":{emoji:"🦵",desc:"Movimentos para quadríceps, posteriores e glúteos",tag:"Pernas + glúteos",ex:[
+    ["Agachamento livre ou no banco","3","8–12","90 s"],
+    ["Leg press","3","10–12","90 s"],
+    ["Mesa flexora","3","10–15","60 s"],
+    ["Cadeira extensora","2–3","10–15","60 s"],
+    ["Elevação pélvica","3","10–12","60–90 s"],
+    ["Panturrilha em pé ou sentada","3","12–15","45–60 s"]]},
+  "Ombros e abdômen":{emoji:"🎯",desc:"Ombros, estabilidade e região central",tag:"Ombros + abdômen",ex:[
+    ["Desenvolvimento sentado com halteres","3","8–12","60–90 s"],
+    ["Elevação lateral","3","12–15","45–60 s"],
+    ["Crucifixo inverso na máquina","3","12–15","45–60 s"],
+    ["Face pull na polia","2","12–15","45–60 s"],
+    ["Prancha (adaptar tempo)","3","20–40 s","45 s"],
+    ["Dead bug","3","8–10 por lado","45 s"]]},
+  "Braços":{emoji:"💪",desc:"Bíceps, tríceps e antebraços",tag:"Braços",ex:[
+    ["Rosca direta","3","8–12","60 s"],
+    ["Rosca alternada","2","10–12","45–60 s"],
+    ["Rosca martelo","2","10–12","45–60 s"],
+    ["Tríceps na polia com corda","3","10–15","45–60 s"],
+    ["Tríceps francês","2","10–12","45–60 s"],
+    ["Flexão/extensão de punho leve (opcional)","2","12–15","45 s"]]},
+  "Corpo todo":{emoji:"⚡",desc:"Sessão geral com movimentos básicos",tag:"Full body",ex:[
+    ["Agachamento no banco ou goblet","3","8–12","90 s"],
+    ["Supino na máquina","3","8–12","60–90 s"],
+    ["Remada sentada","3","8–12","60–90 s"],
+    ["Levantamento terra romeno leve","2","8–10","90 s"],
+    ["Desenvolvimento com halteres","2","10–12","60 s"],
+    ["Prancha adaptada","2","20–40 s","45 s"]]}
+};
+let selectedPlan="Peito e tríceps", selectedRating=0;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function getHistory(){try{return JSON.parse(localStorage.getItem("vemHistory")||"[]")}catch(e){return []}}
+function saveHistory(list){localStorage.setItem("vemHistory",JSON.stringify(list))}
+function toast(msg){const t=$("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2600)}
+function renderCards(){
+ $("workoutCards").innerHTML=Object.entries(plans).map(([name,p])=>`<article class="card workout-card"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${name}</h3><p>${p.desc}</p><span class="pill">${p.ex.length} exercícios sugeridos</span><button class="btn secondary choosePlan" data-plan="${esc(name)}">Ver treino</button></article>`).join("");
+ document.querySelectorAll(".choosePlan").forEach(b=>b.addEventListener("click",()=>selectPlan(b.dataset.plan)));
+ $("feedbackWorkout").innerHTML=Object.keys(plans).map(n=>`<option>${esc(n)}</option>`).join("")+'<option>Cardio — 60 minutos</option>';
+}
+function selectPlan(name){
+ selectedPlan=name;const p=plans[name];$("planTitle").textContent="Treino de "+name;$("planDescription").textContent=p.desc;$("planTag").textContent=p.tag;
+ $("exerciseRows").innerHTML=p.ex.map(e=>`<tr>${e.map(v=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("");
+ $("feedbackWorkout").value=name;$("completeStatus").textContent="";$("detalhes").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function addRecord(record){const list=getHistory();list.unshift({...record,id:Date.now(),date:new Date().toLocaleString("pt-BR")});saveHistory(list);renderHistory()}
+function renderHistory(){
+ const list=getHistory();$("historyList").innerHTML=list.length?list.map(item=>`<div class="history-item"><strong>${esc(item.name)}</strong><div class="small">${esc(item.date)}${item.rating?` · Avaliação: ${"★".repeat(item.rating)}${"☆".repeat(4-item.rating)}`:""}${item.minutes?` · ${item.minutes} min`:""}</div>${item.comment?`<p>${esc(item.comment)}</p>`:""}${item.machine?`<span class="small">Equipamento: ${esc(item.machine)}</span>`:""}</div>`).join(""):'<p class="small">Nenhum treino registrado ainda. Quando concluir uma sessão, ela aparecerá aqui.</p>';
+}
+$("completeBtn").addEventListener("click",()=>{addRecord({type:"treino",name:selectedPlan});$("completeStatus").textContent="Treino registrado com sucesso.";toast("Treino salvo no histórico.")});
+$("cardioBtn").addEventListener("click",()=>{const machine=$("cardioMachine").value;addRecord({type:"cardio",name:"Cardio — 60 minutos",minutes:60,machine});toast("Cardio registrado no histórico.")});
+document.querySelectorAll("[data-rating]").forEach(b=>b.addEventListener("click",()=>{selectedRating=Number(b.dataset.rating);document.querySelectorAll("[data-rating]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))}));
+$("feedbackForm").addEventListener("submit",e=>{e.preventDefault();if(!selectedRating){$("feedbackStatus").textContent="Escolha uma avaliação antes de salvar.";return}const name=$("feedbackWorkout").value;addRecord({type:"feedback",name,rating:selectedRating,comment:$("feedbackText").value.trim()});$("feedbackText").value="";selectedRating=0;document.querySelectorAll("[data-rating]").forEach(b=>b.setAttribute("aria-pressed","false"));$("feedbackStatus").textContent="Feedback salvo. Obrigado por compartilhar sua experiência!";toast("Feedback salvo.")});
+function toggleClass(button,cls){const active=document.body.classList.toggle(cls);button.setAttribute("aria-pressed",String(active));localStorage.setItem("vem_"+cls,active?"1":"0")}
+[["contrastBtn","high-contrast"],["colorBtn","colorblind"],["textBtn","large-text"]].forEach(([id,cls])=>{const b=$(id);if(localStorage.getItem("vem_"+cls)==="1"){document.body.classList.add(cls);b.setAttribute("aria-pressed","true")}b.addEventListener("click",()=>toggleClass(b,cls))});
+$("readBtn").addEventListener("click",()=>{if(!("speechSynthesis" in window)){toast("A leitura de voz não está disponível neste navegador.");return}speechSynthesis.cancel();const msg=new SpeechSynthesisUtterance("Bem-vindo ao Vida em Movimento. Escolha um treino, veja os exercícios, registre a sessão e compartilhe seu feedback. Na área de acessibilidade, você pode ativar alto contraste e ampliar o texto.");msg.lang="pt-BR";speechSynthesis.speak(msg)});
+$("exportBtn").addEventListener("click",()=>{const blob=new Blob([JSON.stringify(getHistory(),null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="vida-em-movimento-historico.json";a.click();URL.revokeObjectURL(url)});
+$("clearBtn").addEventListener("click",()=>{if(confirm("Deseja apagar todo o histórico salvo neste navegador?")){saveHistory([]);renderHistory();toast("Histórico apagado.")}});
+function activateTab(name){
+ document.querySelectorAll(".tab-panel").forEach(panel=>panel.hidden=panel.id!=="panel-"+name);
+ document.querySelectorAll(".tab-btn").forEach(btn=>{const active=btn.dataset.tab===name;btn.classList.toggle("active",active);btn.setAttribute("aria-selected",String(active))});
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>activateTab(btn.dataset.tab)));
+renderCards();selectPlan(selectedPlan);renderHistory();
+</script>
+</body>
+</html>
